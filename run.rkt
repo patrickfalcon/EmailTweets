@@ -2,9 +2,17 @@
 
 (require "lib/tweet.rkt"
          "lib/map-lib.rkt"
+         "auth/web-auth.rkt"
          net/head)
 
+;; Authorisation using key stored in JSON file
+(open-key "auth/key.json")
+(pair-web)
 
+(define (!contains? v1 v2)
+  (not (string-contains? v1 v2)))
+
+(define body null)
 (define (email-tweet)
   
   (cond
@@ -12,7 +20,7 @@
     ((string-contains? (extract-field "Subject" (decode (get-message (mid 0) '(header)))) "tweet: ")
      
      (tweet (substring (extract-field "Subject" (decode (get-message (mid 0) '(header)))) 7 (string-length (extract-field "Subject" (decode (get-message (mid 0) '(header)))))))
-     (print "Posted tweet!")
+     (print "- POSTED -")
      
      (mark-for-delete 0)
      )
