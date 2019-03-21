@@ -4,11 +4,6 @@
          "lib/map-lib.rkt"
          net/head)
 
-(define (get-info v1) (extract-field v1 raw))
-(define header (get-message (mid 0) '(header)))
-(define raw (decode header))
-(define subject (extract-field "Subject" raw))
-(define from (extract-addresses (get-info "From") 'name))
 
 (define (email-tweet)
   
